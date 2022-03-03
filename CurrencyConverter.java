@@ -15,13 +15,13 @@ public class CurrencyConverter{
         String currency2;
 
         System.out.println("Hello! This is a currency converter using the Free Currency Rates API");
-        System.out.println("To get a full list of all the currencies converted go to: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json");
+        System.out.println("To get a full list of all the currencies converted and their 3 letter acronym go to: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json");
         System.out.println("Link to Free Currency Rates API used in this code: https://github.com/fawazahmed0/currency-api");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------");
 
-        System.out.println("Enter 3 letter version of currency you want to convert");
+        System.out.println("Enter 3 letter acronym of currency you want to convert");
         currency1 = scnr.next();
-        System.out.println("Enter 3 letter version of currency that you want it converted to");
+        System.out.println("Enter 3 letter acronym of currency that you want it converted to");
         currency2 = scnr.next();
 
         try{URL url = new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/"+ currency1 + "/" + currency2+ ".json");
