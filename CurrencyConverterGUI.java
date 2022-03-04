@@ -13,7 +13,6 @@ public class CurrencyConverterGUI extends JFrame {
     JLabel LBwelcome;
     BufferedReader reader;
     String line;
-    StringBuffer responseContent = new StringBuffer();
     private static HttpURLConnection connection;
     public void initialize(){
                         /*** FORM PANNEL ***/
@@ -44,12 +43,12 @@ public class CurrencyConverterGUI extends JFrame {
         LBwelcome = new JLabel();
         LBwelcome.setFont(mainFont);
                         /*** Buttons Panel ***/
-        JButton btnOK = new JButton("OK");
+        JButton btnOK = new JButton("Convert");
         btnOK.setFont(mainFont);
         btnOK.addActionListener(new ActionListener(){
-
             @Override
-            public void actionPerformed(ActionEvent a) {
+            public void actionPerformed(ActionEvent e) {
+                StringBuffer responseContent = new StringBuffer();
                 String firstCurrency = jfFirstCurrency.getText();
                 String nextCurrency = jfNextCurrency.getText();
                 try{URL url = new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/"+ firstCurrency + "/" + nextCurrency+ ".json");
@@ -75,14 +74,13 @@ public class CurrencyConverterGUI extends JFrame {
                     }
                     reader.close();
                 }
-                //System.out.println(responseContent.toString());
 
                 String requestResponse = responseContent.substring(37, responseContent.length() - 1);
                 connection.disconnect();
                 LBwelcome.setForeground(Color.white);
-                LBwelcome.setText(requestResponse + " "+ nextCurrency);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
+                LBwelcome.setText(requestResponse + " " + nextCurrency);
+            }catch(Exception a){
+                System.out.println(a.getMessage());
             }
             }
             
@@ -91,10 +89,8 @@ public class CurrencyConverterGUI extends JFrame {
         JButton btnClear = new JButton("Clear");
         btnClear.setFont(mainFont);
         btnClear.addActionListener(new ActionListener(){
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 jfFirstCurrency.setText("");
                 jfNextCurrency.setText("");
                 LBwelcome.setText("");
