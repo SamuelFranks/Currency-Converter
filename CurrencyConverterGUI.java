@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class CurrencyConverterGUI extends JFrame {
     final private Font mainFont = new Font("comic sans", Font.BOLD, 18);
-    JTextField jfFirstCurrency, jfNextCurrency;
+    JTextField jfFirstCurrency, jfNextCurrency, jfFirstCurrencyAmount;
     JLabel LBwelcome;
     BufferedReader reader;
     String line;
@@ -30,14 +30,24 @@ public class CurrencyConverterGUI extends JFrame {
         jfNextCurrency = new JTextField();
         jfNextCurrency.setFont(mainFont);
 
+        JLabel lbFirstCurrencyAmount = new JLabel("Amount of currency");
+        lbFirstCurrencyAmount.setFont(mainFont);
+        lbFirstCurrencyAmount.setForeground(Color.WHITE);
+
+        jfFirstCurrencyAmount = new JTextField();
+        jfFirstCurrencyAmount.setFont(mainFont);
+
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(4, 1, 5, 5));
         formPanel.setOpaque(false);
+        formPanel.add(lbFirstCurrencyAmount);
+        formPanel.add(jfFirstCurrencyAmount);
         formPanel.add(lbFirstCurrency);
         formPanel.add(jfFirstCurrency);
         formPanel.add(lbNextCurrency);
         formPanel.add(jfNextCurrency);
+        
         
                         /*** WELCOME LABEL ***/
         LBwelcome = new JLabel();
@@ -51,6 +61,7 @@ public class CurrencyConverterGUI extends JFrame {
                 StringBuffer responseContent = new StringBuffer();
                 String firstCurrency = jfFirstCurrency.getText();
                 String nextCurrency = jfNextCurrency.getText();
+                double amount = Double.parseDouble(jfFirstCurrencyAmount.getText());
                 try{URL url = new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/"+ firstCurrency + "/" + nextCurrency+ ".json");
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -76,9 +87,11 @@ public class CurrencyConverterGUI extends JFrame {
                 }
 
                 String requestResponse = responseContent.substring(37, responseContent.length() - 1);
+                double requestDouble = Double.parseDouble(requestResponse);
                 connection.disconnect();
                 LBwelcome.setForeground(Color.white);
-                LBwelcome.setText("1 " + firstCurrency+ " = " +requestResponse + " " + nextCurrency);
+                Double FinalAmount = amount * requestDouble;
+                LBwelcome.setText(amount + " " + firstCurrency+ " = " +FinalAmount + " " + nextCurrency);
             }catch(Exception a){
                 System.out.println(a.getMessage());
             }
@@ -92,6 +105,7 @@ public class CurrencyConverterGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jfFirstCurrency.setText("");
+                jfFirstCurrencyAmount.setText("");
                 jfNextCurrency.setText("");
                 LBwelcome.setText("");
             }
@@ -117,7 +131,7 @@ public class CurrencyConverterGUI extends JFrame {
         add(mainPanel);
 
         setTitle("Currency Converter");
-        setSize(500,600);
+        setSize(680,400);
         setMinimumSize(new Dimension(300,400));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
