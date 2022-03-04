@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.io.InputStreamReader;
 
 public class CurrencyConverterGUI extends JFrame {
-    final private Font mainFont = new Font("segoe print", Font.BOLD, 18);
+    final private Font mainFont = new Font("comic sans", Font.BOLD, 18);
     JTextField jfFirstCurrency, jfNextCurrency;
     JLabel LBwelcome;
     BufferedReader reader;
@@ -78,7 +78,7 @@ public class CurrencyConverterGUI extends JFrame {
                 String requestResponse = responseContent.substring(37, responseContent.length() - 1);
                 connection.disconnect();
                 LBwelcome.setForeground(Color.white);
-                LBwelcome.setText(requestResponse + " " + nextCurrency);
+                LBwelcome.setText("1 " + firstCurrency+ " = " +requestResponse + " " + nextCurrency);
             }catch(Exception a){
                 System.out.println(a.getMessage());
             }
